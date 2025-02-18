@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+
+    <!-- 引入 Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Badeen+Display&family=DotGothic16&family=Oi&family=Rubik+Glitch&family=Tiny5&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Badeen+Display&family=DotGothic16&family=Moirai+One&family=Oi&family=Rubik+Glitch&family=Tiny5&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Badeen+Display&family=Bagel+Fat+One&family=DotGothic16&family=Moirai+One&family=Oi&family=Ranchers&family=Rubik+Glitch&family=Tiny5&family=VT323&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Badeen+Display&family=Bagel+Fat+One&family=Bruno+Ace&family=DotGothic16&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Jua&family=M+PLUS+1p&family=Moirai+One&family=Oi&family=Ranchers&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik+Glitch&family=Tiny5&family=VT323&display=swap" rel="stylesheet">
+    <!-- 引入外部 CSS -->
+    <link rel="stylesheet" href="code.css">
+
+    <!-- Import Map 配置 -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.167.1/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.167.1/examples/jsm/"
+        }
+    }
+    </script>
+</head>
+<body>
+    <div class="background"></div>
+    <canvas id="gradientCanvas"></canvas>
+    <div class="text-container">
+        <div class="text">
+            C<span class="e">H</span>E<span class="n">N</span> Y<span class="m">U</span>N MA
+        </div>
+        <div class="arrow">
+            <div class="arrow-line"></div>
+            <div class="arrow-head"></div>
+        </div>
+    </div>
+    <div class="top-right-text">portfolio</div>
+    <div class="cc-lab-text">( CC LAB ) - ＊</div>
+    
+    <div class="line"></div>
+    <div id="3d-model"></div> <!-- 用于渲染 3D 模型 -->
+
+    <!-- 使用模块加载 -->
+    <div class="right-panel">
+        <div class="right-panel-content"></div>
+    </div>
+
+    <div class="rounded-box-container"></div>
+    <!-- 使用模块加载 -->
+    <script type="module" src="cc.js"></script>
+
+    
+</body>
+</html>

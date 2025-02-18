@@ -1,0 +1,355 @@
+/* 基本樣式 */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, #ff9a9e, #fad0c4); /* 預設漸層 */
+    z-index: -1; /* 確保畫布和文字在上方 */
+}
+
+/* Canvas 基本樣式 */
+canvas {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: transparent;
+    z-index: 0; /* 確保光暈在背景層下 */
+}
+
+/* 文字區域 */
+.text-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 文字與箭頭的間距 */
+}
+
+.text {
+    font-size: 45px;
+    font-family: 'Oi', sans-serif;
+    color: white;
+    cursor: pointer;  /* 滑鼠移上去時變成手指 */
+    transition: color 0.3s ease; /* 可讓顏色切換更順 */
+}
+
+/* 滑鼠 hover 時字體變色 */
+.text:hover {
+    color: #FFD700; /* 可自訂成你想要的顏色 */
+}
+
+
+/* 右上角文字样式 */
+.top-right-text {
+    position: absolute;
+    top: 10px; /* 距离顶部的距离 */
+    right: 20px; /* 距离右侧的距离 */
+    font-size: 24px; /* 字体大小 */
+    font-family: 'Oi', sans-serif; /* 使用您已有的字体 */
+    color: white; /* 文字颜色 */
+    z-index: 10; /* 确保文字在其他内容上方 */
+}
+
+.cc-lab-text {
+    position: absolute;
+    top: 50px; /* 距离顶部的距离 */
+    right: 20px; /* 距离右侧的距离 */
+    font-size: 16px;  /* 比 portfolio 小 */
+    color: white;
+    font-family: 'Oi', sans-serif; 
+}
+
+/* 細線箭頭 */
+.arrow {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.arrow-line {
+    width: 50px; /* 箭頭線長度 */
+    height: 2px;
+    background-color: white;
+}
+
+.arrow-head {
+    position: relative;
+    width: 10px;
+    height: 10px;
+}
+
+.arrow-head::before,
+.arrow-head::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    background-color: white;
+    transform-origin: right center;
+}
+
+.arrow-head::before {
+    transform: rotate(45deg);
+    top: 50%;
+    right: 0;
+}
+
+.arrow-head::after {
+    transform: rotate(-45deg);
+    top: 50%;
+    right: 0;
+}
+
+/* 橫線樣式 */
+.line {
+    position: absolute;
+    top: 80px; /* 根據需要調整位置 */
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: white;
+}
+
+/* 闪烁效果 */
+@keyframes blink {
+    0%, 95% {
+        opacity: 1;
+    }
+    96%, 100% {
+        opacity: 0;
+    }
+}
+.e, .n, .m {
+    animation: blink 10s infinite;
+    animation-delay: calc(var(--delay, 0s));
+}
+.e {
+    --delay: 2s;
+}
+.n {
+    --delay: 7s;
+}
+.m {
+    --delay: 10s;
+}
+
+/* 3D 模型容器 */
+#3d-model {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 400px;
+    transform: translate(-50%, -50%);
+    z-index: 0; /* 确保在文字下方 */
+}
+
+.right-panel.active {
+    transform: translateX(-100%); /* 滑出到中间偏左一点 */
+}
+
+/* 圆角框容器 */
+.rounded-box-container {
+    position: absolute;
+    top: 140px; /* 起始位置 */
+    left: 70px; /* 靠左侧偏移 */
+    z-index: 6; /* 确保在模型和背景上方 */
+    display: none; /* 初始隐藏 */
+    flex-direction: column;
+    gap: 16px; /* 每个框之间的间距 */
+}
+
+/* 圆角框样式 */
+.rounded-box {
+    padding: 5px 20px; /* 内边距 */
+    border: 1px solid white; /* 边框颜色 */
+    border-radius: 15px; /* 圆角 */
+    background-color: rgba(255, 255, 255, 0.2); /* 半透明背景 */
+    font-family: 'VT323', sans-serif; /* 字体样式 */
+    font-size: 20px;
+    color: white; /* 字体颜色 */
+    opacity: 0; /* 初始透明 */
+    transform: translateY(-20px); /* 初始位置稍微向上 */
+    transition: opacity 0.8s ease, transform 0.8s ease; /* 浮现动画 */
+}
+
+.right-panel {
+    position: absolute;
+    top: 80px;
+    right: -60%;
+    width: 55%;
+    height: calc(100% - 80px);
+    background-color: rgba(255, 255, 255, 0.7);
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 5;
+    transition: transform 1.5s ease;
+    overflow: hidden; /* 不再使用 scroll */
+    padding: 20px;
+}
+
+.right-panel.active {
+    transform: translateX(-100%);
+}
+
+.fade-in-right {
+    opacity: 0;
+    transform: translateX(60px);
+    transition: all 1s ease;
+}
+
+.fade-in-right.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* 讓 .hide 往右移，順便透明 */
+.fade-in-right.hide {
+    opacity: 0;
+    transform: translateX(60px);
+    transition: all 1s ease;
+}
+
+/* ✅ 讓照片真正填滿 right-panel */
+.about-me-container {
+    position: absolute;  /* 改成 absolute，確保貼滿 */
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    overflow: hidden;
+}
+
+/* ✅ 照片填滿 + object-fit: cover */
+#aboutMePhoto {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; 
+    transition: filter 0.8s ease; /* 讓變暗有動畫 */
+}
+
+/* ✅ 「About Me」標題：初始就在照片上 */
+.about-me-title {
+    position: absolute;
+    top: 12%;  /* 讓它在照片上方 */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 47px;
+    color: white; /* 確保可見 */
+    z-index: 2; /* 確保文字疊在照片上 */
+    font-family: 'VT323', sans-serif;
+}
+
+/* ✅ 文字區塊：預設隱藏 */
+.about-me-text {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+    opacity: 0;  /* 預設隱藏 */
+    transform: translateY(50px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    display: flex; 
+    justify-content: center;
+    align-items: center; /* 讓文字置中 */
+    font-family: 'VT323', sans-serif;
+}
+
+/* ✅ 滾動後，文字出現 */
+.about-me-text.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ✅ 讓文字不會貼右邊 */
+.about-me-paragraph {
+    max-width: 85%;
+    line-height: 1.5;
+    text-align: center; /* 文字置中 */
+}
+  
+
+/* 3) show/hide 動畫 */
+.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+.hide {
+    opacity: 0;
+    transform: translateX(60px);
+}
+
+.panel-content-container {
+    position: relative; /* 新增這行 (沒有的話) */
+    width: 100%; 
+    height: 100%;
+    /* 不要 overflow-y: auto; 也不要 padding: 20px 影響定位了 */
+    padding: 0; 
+    font-family: 'VT323', sans-serif;
+}
+
+.panel-title {
+    text-align: left;
+    font-family: 'Oi', sans-serif; /* 標題字型 */
+    font-size: 60px;
+    margin-bottom: 10px;
+    color: #333; /* 可以依需求調整顏色 */
+    
+    margin-left: 20px;
+}
+
+.panel-iframe-container {
+    position: absolute;
+    top: 150px;       /* 保持80px, 你可微調 */
+    left: 0;         /* 改成 0 */
+    right: 0;        /* 改成 0 */
+    height: 400px;   /* 你原先給 iFrame 400px */
+    transition: all 0.8s ease;
+
+    display: flex;             /* 新增 */
+    justify-content: center;   /* 新增 */
+    align-items: center;       /* 新增 */
+}
+
+.panel-iframe-container iframe {
+    width: 400px;
+    height: 400px;
+    border: none;
+}
+
+.panel-text {
+    font-size: 24px;
+    color: #333;
+    text-align: left;
+    /* margin-top: 140px; ← 刪了 */
+    
+}
+
+.panel-text-container {
+    position: absolute;
+    top: 80px;   
+    left: 20px;
+    right: 20px;
+    height: auto;   /* 跟 iFrame 同高, 以便替換 */
+    overflow: auto;  /* 如果文字太多，才用內部捲動(可視需求) */
+    transition: all 0.8s ease;
+    padding-right: 30px;
+}
+
+/* 預設先隱藏 */
+.panel-text-container {
+    opacity: 0;
+    transform: translateX(60px);
+}
