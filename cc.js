@@ -199,6 +199,42 @@ I plan to make the main character a kitten. In the beginning of the game, the pl
 This was the first time I made a game, and I encountered a lot of difficulties, such as not knowing how to design game levels and not being able to achieve the effects I wanted. In addition, I decided to set the game canvas to 600*600 because I wanted to give the game a cuter and more retro design. But overall, this experience was very interesting and has made me want to continue learning how to make more interesting games in the future. I hope to try to make more abstract but aesthetically pleasing works after this.`, sketchPage: "https://editor.p5js.org/FU0PU0/full/ZmMgWosCm" }
 ];
 
+
+// ✅ 新增這段
+const spring2025Contents = [
+  {
+    title: "Interactive Typography",
+    content: "",
+    sketchPage: "https://editor.p5js.org/FU0PU0/full/DZTOepDoA"
+  },
+  {
+    title: "Project B",
+    content: "",
+    sketchPage: "https://example.com/project-b"
+  },
+  {
+    title: "Project C",
+    content: "",
+    sketchPage: "https://example.com/project-c"
+  },
+  {
+    title: "Project D",
+    content: "",
+    sketchPage: "https://example.com/project-d"
+  },
+  {
+    title: "Project E",
+    content: "",
+    sketchPage: "https://example.com/project-e"
+  },
+  {
+    title: "Project F",
+    content: "",
+    sketchPage: "https://example.com/project-f"
+  }
+];
+
+
 let isPanelActive = false;
 let boxesCreated = false;
 let introShown = false;
@@ -304,9 +340,9 @@ function showYearOptions() {
     showProjectsList(true);  // true 表示顯示有內容的專案列表
   });
 
-  // 點擊 2025 SPRING：顯示「空」的專案列表
+
   option2025.addEventListener("click", () => {
-    showProjectsList(false); // false 表示顯示空列表
+    showProjectsList(false);  // false => 2025 SPRING
   });
 
   roundedBoxContainer.appendChild(option2024);
@@ -321,36 +357,24 @@ function showYearOptions() {
   });
 }
 
-// (c) 顯示實際的專案列表（或空）
+
 function showProjectsList(hasProjects) {
   // 每次顯示前清空
   roundedBoxContainer.innerHTML = "";
   showingProjects = true;
 
-  if (!hasProjects) {
-    // 2025 SPRING：空列表
-    const emptyMsg = document.createElement("div");
-    emptyMsg.classList.add("rounded-box");
-    emptyMsg.style.fontSize = "20px";
-    emptyMsg.style.padding = "15px 30px";
-    emptyMsg.style.borderRadius = "50px";
-    emptyMsg.textContent = "No projects yet...";
-    roundedBoxContainer.appendChild(emptyMsg);
+  // ✅ 如果 hasProjects = true → 顯示 2024 FALL
+  //    如果 hasProjects = false → 顯示 2025 SPRING
+  const projectArray = hasProjects ? boxContents : spring2025Contents;
 
-    requestAnimationFrame(() => {
-      emptyMsg.style.opacity = 1;
-      emptyMsg.style.transform = "translateY(0)";
-    });
-    return;
-  }
-
-  // 否則 2024 FALL：顯示原本的 boxContents
-  boxContents.forEach((boxContent, i) => {
+  // ✅ 跑迴圈顯示
+  projectArray.forEach((boxContent, i) => {
     const box = document.createElement("div");
     box.classList.add("rounded-box");
     box.textContent = boxContent.title;
-    box.style.transitionDelay = `${i * 0.2}s`;
+    box.style.transitionDelay = `${i * 0.2}s`;  // 跟 2024 FALL 同步漸入
 
+    // Hover 效果
     box.addEventListener("mouseenter", () => {
       box.style.backgroundColor = "white";
       box.style.color = "black";
@@ -360,41 +384,42 @@ function showProjectsList(hasProjects) {
       box.style.color = "white";
     });
 
+    // 點擊顯示作品
     box.addEventListener("click", () => {
-        rightPanel.classList.add("active");
-        rightPanel.innerHTML = `
-          <div class="panel-content-container">
-            <h2 class="panel-title fade-in-right" id="dynamicTitle">${boxContent.title}</h2>
-            <div class="panel-iframe-container fade-in-right hide" id="dynamicIframeContainer">
-                <iframe src="${boxContent.sketchPage}"></iframe>
-            </div>
-            <div class="panel-text-container fade-in-right hide" id="dynamicTextContainer">
-                <p class="panel-text">${boxContent.content}</p>
-            </div>
+      rightPanel.classList.add("active");
+      rightPanel.innerHTML = `
+        <div class="panel-content-container">
+          <h2 class="panel-title fade-in-right" id="dynamicTitle">${boxContent.title}</h2>
+          <div class="panel-iframe-container fade-in-right hide" id="dynamicIframeContainer">
+              <iframe src="${boxContent.sketchPage}"></iframe>
           </div>
-        `;
-      
-        // 第一步：標題進場
-        setTimeout(() => {
-          document.getElementById("dynamicTitle").classList.add("show");
-        }, 100); // 0.1秒後標題滑入
-      
-        // 第二步：再過 0.6秒讓 iFrame 出現
-        setTimeout(() => {
-          document.getElementById("dynamicIframeContainer").classList.remove("hide");
-          document.getElementById("dynamicIframeContainer").classList.add("show");
-        }, 600);
-      });
-      
+          <div class="panel-text-container fade-in-right hide" id="dynamicTextContainer">
+              <p class="panel-text">${boxContent.content}</p>
+          </div>
+        </div>
+      `;
 
+      // 動畫
+      setTimeout(() => {
+        document.getElementById("dynamicTitle").classList.add("show");
+      }, 100);
+      setTimeout(() => {
+        document.getElementById("dynamicIframeContainer").classList.remove("hide");
+        document.getElementById("dynamicIframeContainer").classList.add("show");
+      }, 600);
+    });
+
+    
     roundedBoxContainer.appendChild(box);
 
+    // 執行漸入動畫
     requestAnimationFrame(() => {
       box.style.opacity = 1;
       box.style.transform = "translateY(0)";
     });
   });
 }
+
 
 //=======================//
 // 6. 點擊 & 雙擊事件
