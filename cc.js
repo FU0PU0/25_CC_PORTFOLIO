@@ -205,7 +205,7 @@ const spring2025Contents = [
   {
     title: "Interactive Typography",
     content: "",
-    sketchPage: "https://editor.p5js.org/FU0PU0/full/DZTOepDoA"
+    sketchPage: "https://editor.p5js.org/FU0PU0/full/Zn4aHqX5k"
   },
   {
     title: "Project B",
