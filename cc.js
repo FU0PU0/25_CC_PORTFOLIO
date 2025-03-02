@@ -302,7 +302,6 @@ document.addEventListener("wheel", (event) => {
 
   
 
-// (b) 顯示年份選單 (2024 FALL, 2025 SPRING)
 function showYearOptions() {
   // 先清空容器
   roundedBoxContainer.innerHTML = "";
@@ -323,8 +322,16 @@ function showYearOptions() {
   option2025.textContent = "2025 SPRING";
   option2025.style.borderRadius = "50px";
 
+  // **新增 A PEACE PLACE 按鈕**
+  const optionPeace = document.createElement("div");
+  optionPeace.classList.add("rounded-box");
+  optionPeace.style.fontSize = "30px";
+  optionPeace.style.padding = "15px 30px";
+  optionPeace.textContent = "A PEACE PLACE";
+  optionPeace.style.borderRadius = "50px";
+
   // hover 效果
-  [option2024, option2025].forEach((opt) => {
+  [option2024, option2025, optionPeace].forEach((opt) => {
     opt.addEventListener("mouseenter", () => {
       opt.style.backgroundColor = "white";
       opt.style.color = "black";
@@ -340,13 +347,20 @@ function showYearOptions() {
     showProjectsList(true);  // true 表示顯示有內容的專案列表
   });
 
-
+  // 點擊 2025 SPRING：顯示專案列表
   option2025.addEventListener("click", () => {
     showProjectsList(false);  // false => 2025 SPRING
   });
 
+  // **點擊 A PEACE PLACE：開啟新分頁**
+  optionPeace.addEventListener("click", () => {
+    window.open("https://fu0pu0.github.io/a_peace_place/", "_blank");
+  });
+
+  // **將三個選項加入容器**
   roundedBoxContainer.appendChild(option2024);
   roundedBoxContainer.appendChild(option2025);
+  roundedBoxContainer.appendChild(optionPeace);
 
   // 小延遲讓動畫生效
   requestAnimationFrame(() => {
@@ -354,8 +368,11 @@ function showYearOptions() {
     option2024.style.transform = "translateY(0)";
     option2025.style.opacity = 1;
     option2025.style.transform = "translateY(0)";
+    optionPeace.style.opacity = 1;
+    optionPeace.style.transform = "translateY(0)";
   });
 }
+
 
 
 function showProjectsList(hasProjects) {
