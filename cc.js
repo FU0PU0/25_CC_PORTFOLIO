@@ -208,9 +208,9 @@ const spring2025Contents = [
     sketchPage: "https://editor.p5js.org/FU0PU0/full/Zn4aHqX5k"
   },
   {
-    title: "Project B",
+    title: "Experimental Camera",
     content: "",
-    sketchPage: "https://example.com/project-b"
+    sketchPage: "model/camera 2.mp4"
   },
   {
     title: "Project C",
@@ -402,30 +402,60 @@ function showProjectsList(hasProjects) {
     });
 
     // 點擊顯示作品
-    box.addEventListener("click", () => {
-      rightPanel.classList.add("active");
-      rightPanel.innerHTML = `
-        <div class="panel-content-container">
-          <h2 class="panel-title fade-in-right" id="dynamicTitle">${boxContent.title}</h2>
-          <div class="panel-iframe-container fade-in-right hide" id="dynamicIframeContainer">
-              <iframe src="${boxContent.sketchPage}"></iframe>
-          </div>
-          <div class="panel-text-container fade-in-right hide" id="dynamicTextContainer">
-              <p class="panel-text">${boxContent.content}</p>
-          </div>
+box.addEventListener("click", () => {
+  rightPanel.classList.add("active");
+
+  if (boxContent.sketchPage.endsWith('.mp4')) {
+    // 顯示影片
+    rightPanel.innerHTML = `
+      <div class="panel-content-container">
+        <h2 class="panel-title fade-in-right" id="dynamicTitle">${boxContent.title}</h2>
+        <div class="panel-video-container fade-in-right hide" id="dynamicVideoContainer">
+          <video id="projectc-video" controls>
+            <source src="${boxContent.sketchPage}" type="video/mp4">
+            您的瀏覽器不支援影片播放。
+          </video>
         </div>
-      `;
-
-      // 動畫
-      setTimeout(() => {
-        document.getElementById("dynamicTitle").classList.add("show");
-      }, 100);
-      setTimeout(() => {
-        document.getElementById("dynamicIframeContainer").classList.remove("hide");
-        document.getElementById("dynamicIframeContainer").classList.add("show");
-      }, 600);
-    });
-
+      </div>
+    `;
+    setTimeout(() => {
+      const titleElement = document.getElementById("dynamicTitle");
+      const videoContainer = document.getElementById("dynamicVideoContainer");
+      if (titleElement) {
+        titleElement.classList.add("show");
+      }
+      if (videoContainer) {
+        videoContainer.classList.remove("hide");
+        videoContainer.classList.add("show");
+      }
+    }, 100);
+    
+  } else {
+    // 顯示其他專案的 iframe
+    rightPanel.innerHTML = `
+      <div class="panel-content-container">
+        <h2 class="panel-title fade-in-right" id="dynamicTitle">${boxContent.title}</h2>
+        <div class="panel-iframe-container fade-in-right hide" id="dynamicIframeContainer">
+          <iframe src="${boxContent.sketchPage}" frameborder="0"></iframe>
+        </div>
+        <div class="panel-text-container fade-in-right hide" id="dynamicTextContainer">
+          <p class="panel-text">${boxContent.content}</p>
+        </div>
+      </div>
+    `;
+    setTimeout(() => {
+      const titleElement = document.getElementById("dynamicTitle");
+      if (titleElement) {
+        titleElement.classList.add("show");
+      }
+      const iframeContainer = document.getElementById("dynamicIframeContainer");
+      if (iframeContainer) {
+        iframeContainer.classList.remove("hide");
+        iframeContainer.classList.add("show");
+      }
+    }, 100);
+  }
+});
     
     roundedBoxContainer.appendChild(box);
 

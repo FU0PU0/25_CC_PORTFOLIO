@@ -353,3 +353,24 @@ canvas {
     opacity: 0;
     transform: translateX(60px);
 }
+
+.panel-video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .panel-video-container video {
+    width: 90%; /* 保證影片縮小，不超過邊界 */
+    height: auto; /* 自動保持比例 */
+    max-height: 90%; /* 避免影片過高 */
+    object-fit: contain; /* 保證影片完整呈現 */
+  }
+  
+  
