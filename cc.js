@@ -209,8 +209,9 @@ const spring2025Contents = [
   },
   {
     title: "Experimental Camera",
-    content: "",
-    sketchPage: "model/camera 2.mp4"
+  content: "",
+  sketchPage: "model/camera 2.mp4",
+  iframeSketchPage: "https://editor.p5js.org/FU0PU0/full/sM5ZQmFy8"
   },
   {
     title: "Project C",
@@ -406,29 +407,33 @@ box.addEventListener("click", () => {
   rightPanel.classList.add("active");
 
   if (boxContent.sketchPage.endsWith('.mp4')) {
-    // 顯示影片
     rightPanel.innerHTML = `
       <div class="panel-content-container">
         <h2 class="panel-title fade-in-right" id="dynamicTitle">${boxContent.title}</h2>
+  
+        <!-- 影片容器 -->
         <div class="panel-video-container fade-in-right hide" id="dynamicVideoContainer">
           <video id="projectc-video" controls>
             <source src="${boxContent.sketchPage}" type="video/mp4">
             您的瀏覽器不支援影片播放。
           </video>
         </div>
+  
+        <!-- 專屬 Experimental Camera 的 p5.js iframe -->
+        ${boxContent.iframeSketchPage ? `
+          <div class="panel-iframe-container fade-in-right hide" id="dynamicExperimentalIframe">
+            <iframe src="${boxContent.iframeSketchPage}" frameborder="0" allowfullscreen></iframe>
+          </div>
+        ` : ''}
       </div>
     `;
+  
     setTimeout(() => {
-      const titleElement = document.getElementById("dynamicTitle");
-      const videoContainer = document.getElementById("dynamicVideoContainer");
-      if (titleElement) {
-        titleElement.classList.add("show");
-      }
-      if (videoContainer) {
-        videoContainer.classList.remove("hide");
-        videoContainer.classList.add("show");
-      }
+      document.getElementById("dynamicTitle")?.classList.add("show");
+      document.getElementById("dynamicVideoContainer")?.classList.remove("hide");
+      document.getElementById("dynamicVideoContainer")?.classList.add("show");
     }, 100);
+  
     
   } else {
     // 顯示其他專案的 iframe
@@ -595,6 +600,27 @@ document.addEventListener("wheel", (event) => {
         aboutMeText.classList.add("hide");
       }
       return; // 不要再執行下面作品的滾動邏輯
+    }
+
+    const videoContainer = document.getElementById("dynamicVideoContainer");
+    const expIframe = document.getElementById("dynamicExperimentalIframe");
+
+    if (expIframe && videoContainer) {
+        // 這是 Experimental Camera 的情況
+        if (event.deltaY > 0) {
+            // 滾動下 → 隱藏影片、顯示 p5.js
+            videoContainer.classList.remove("show");
+            videoContainer.classList.add("hide");
+            expIframe.classList.remove("hide");
+            expIframe.classList.add("show");
+        } else {
+            // 滾動上 → 顯示影片、隱藏 p5.js
+            expIframe.classList.remove("show");
+            expIframe.classList.add("hide");
+            videoContainer.classList.remove("hide");
+            videoContainer.classList.add("show");
+        }
+        return; // ✅ 一定要加，避免下面的 iframe/text 切換也觸發
     }
   
     // 否則才執行作品 iFrame / 文字 切換
