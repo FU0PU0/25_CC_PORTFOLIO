@@ -214,24 +214,12 @@ const spring2025Contents = [
   iframeSketchPage: "https://editor.p5js.org/FU0PU0/full/sM5ZQmFy8"
   },
   {
-    title: "Project C",
-    content: "",
-    sketchPage: "https://example.com/project-c"
+    title: "Community Tool or Quiz",
+    externalLink: "https://fu0pu0.github.io/A_bird_of_passage/"
   },
   {
-    title: "Project D",
-    content: "",
-    sketchPage: "https://example.com/project-d"
-  },
-  {
-    title: "Project E",
-    content: "",
-    sketchPage: "https://example.com/project-e"
-  },
-  {
-    title: "Project F",
-    content: "",
-    sketchPage: "https://example.com/project-f"
+    title: "Digital Divination",
+  externalLink: "https://fu0pu0.github.io/Digital_Divination/"
   }
 ];
 
@@ -404,6 +392,11 @@ function showProjectsList(hasProjects) {
 
     // 點擊顯示作品
 box.addEventListener("click", () => {
+  // ✅ 如果這個作品有 externalLink，就直接開新網頁
+  if (boxContent.externalLink) {
+    window.open(boxContent.externalLink, "_blank");
+    return;
+  }
   rightPanel.classList.add("active");
 
   if (boxContent.sketchPage.endsWith('.mp4')) {
